@@ -1,0 +1,255 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.38.0.0
+Copyright (C) 2022 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Deep Vinodbhai Lad, Nirma University, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.38.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.19
+Assembler:       Armasm.exe V6.19
+Linker/Locator:  ArmLink.exe V6.19
+Library Manager: ArmAr.exe V6.19
+Hex Converter:   FromElf.exe V6.19
+CPU DLL:         SARMCM3.DLL V5.38.0.0
+Dialog DLL:      DCM.DLL V1.17.5.0
+Target DLL:      UL2CM3.DLL V1.164.8.0
+Dialog DLL:      TCM.DLL V1.56.4.0
+ 
+<h2>Project:</h2>
+E:\STM32\Keil\SPI_Protocol\SPI.uvprojx
+Project File Date:  03/16/2023
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.19', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
+Build target 'Target 1'
+SPI_Tx_Testing.c(1): warning: In file included from...
+./stm32f10x_GPIO.h(4): warning: In file included from...
+C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include\stm32f10x.h(18): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *              - To use or not the peripheral<92>s drivers in application code(i.e. 
+                                               ^
+C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include\stm32f10x.h(19): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *                code will be based on direct access to peripheral<92>s registers 
+                                                                    ^
+C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include\stm32f10x.h(26): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *           - Macros to access peripheral<92>s registers hardware
+                                           ^
+SPI_Tx_Testing.c(10): warning: no previous prototype for function 'SPI1_GPIOInits' [-Wmissing-prototypes]
+void SPI1_GPIOInits(void){
+     ^
+SPI_Tx_Testing.c(10): note: declare 'static' if the function is not intended to be used outside of this translation unit
+void SPI1_GPIOInits(void){
+^
+static 
+SPI_Tx_Testing.c(2): warning: In file included from...
+./stm32f10x_SPI.h(23): warning: padding struct 'SPI_Handle_t' with 1 byte to align 'pSPIx' [-Wpadded]
+        SPI_TypeDef  *pSPIx;
+                      ^
+SPI_Tx_Testing.c(29): warning: no previous prototype for function 'SPI1_Inits' [-Wmissing-prototypes]
+void SPI1_Inits(void){
+     ^
+SPI_Tx_Testing.c(29): note: declare 'static' if the function is not intended to be used outside of this translation unit
+void SPI1_Inits(void){
+^
+static 
+SPI_Tx_Testing.c(45): warning: unused variable 'data' [-Wunused-variable]
+        char data[]="Hello World";
+             ^
+7 warnings generated.
+compiling SPI_Tx_Testing.c...
+stm32f10x_SPI.c(1): warning: In file included from...
+./stm32f10x_SPI.h(4): warning: In file included from...
+C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include\stm32f10x.h(18): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *              - To use or not the peripheral<92>s drivers in application code(i.e. 
+                                               ^
+C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include\stm32f10x.h(19): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *                code will be based on direct access to peripheral<92>s registers 
+                                                                    ^
+C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include\stm32f10x.h(26): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *           - Macros to access peripheral<92>s registers hardware
+                                           ^
+stm32f10x_SPI.c(33): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                        RCC->APB2ENR&=~(1<<12);
+                                    ~~^~~~~~~~
+stm32f10x_SPI.c(36): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                        RCC->APB1ENR&=~(1<<14);
+                                    ~~^~~~~~~~
+stm32f10x_SPI.c(39): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                        RCC->APB1ENR&=~(1<<15);
+                                    ~~^~~~~~~~
+stm32f10x_SPI.c(1): warning: In file included from...
+./stm32f10x_SPI.h(23): warning: padding struct 'SPI_Handle_t' with 1 byte to align 'pSPIx' [-Wpadded]
+        SPI_TypeDef  *pSPIx;
+                      ^
+stm32f10x_SPI.c(99): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                        RCC->APB2RSTR&=~(1<<12);
+                                     ~~^~~~~~~~
+stm32f10x_SPI.c(103): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                        RCC->APB1RSTR&=~(1<<14);
+                                     ~~^~~~~~~~
+stm32f10x_SPI.c(107): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                        RCC->APB1RSTR&=~(1<<15);
+                                     ~~^~~~~~~~
+stm32f10x_SPI.c(122): warning: cast from 'uint8_t *' (aka 'unsigned char *') to 'uint16_t *' (aka 'unsigned short *') increases required alignment from 1 to 2 [-Wcast-align]
+                        pSPIx->DR       |= *((uint16_t*)pTxBuffer);
+                                             ^~~~~~~~~~~~~~~~~~~~
+stm32f10x_SPI.c(124): warning: cast from 'uint8_t *' (aka 'unsigned char *') to 'uint16_t *' (aka 'unsigned short *') increases required alignment from 1 to 2 [-Wcast-align]
+                        (uint16_t*)pTxBuffer++;
+                        ^~~~~~~~~~~~~~~~~~~~~~
+stm32f10x_SPI.c(124): warning: expression result unused [-Wunused-value]
+                        (uint16_t*)pTxBuffer++;
+                        ^          ~~~~~~~~~~~
+stm32f10x_SPI.c(156): warning: no newline at end of file [-Wnewline-eof]
+void SPI_Handling(SPI_TypeDef *pHandle);
+                                        ^
+14 warnings generated.
+compiling stm32f10x_SPI.c...
+stm32f10x_GPIO.c(1): warning: In file included from...
+./stm32f10x_GPIO.h(4): warning: In file included from...
+C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include\stm32f10x.h(18): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *              - To use or not the peripheral<92>s drivers in application code(i.e. 
+                                               ^
+C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include\stm32f10x.h(19): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *                code will be based on direct access to peripheral<92>s registers 
+                                                                    ^
+C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include\stm32f10x.h(26): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *           - Macros to access peripheral<92>s registers hardware
+                                           ^
+stm32f10x_GPIO.c(45): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                        RCC->APB2ENR&=~(1<<2);
+                                    ~~^~~~~~~
+stm32f10x_GPIO.c(48): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                        RCC->APB2ENR&=~(1<<3);
+                                    ~~^~~~~~~
+stm32f10x_GPIO.c(51): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                        RCC->APB2ENR&=~(1<<4);
+                                    ~~^~~~~~~
+stm32f10x_GPIO.c(54): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                        RCC->APB2ENR&=~(1<<5);
+                                    ~~^~~~~~~
+stm32f10x_GPIO.c(81): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                        pGPIOHandle->pGPIOx->CRH&=~(3<<((temp*4)+2));
+                                                ~~^~~~~~~~~~~~~~~~~~
+stm32f10x_GPIO.c(84): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                        pGPIOHandle->pGPIOx->CRH&=~(3<<((temp*4)+2));
+                                                ~~^~~~~~~~~~~~~~~~~~
+stm32f10x_GPIO.c(63): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+        uint32_t temp=0;
+                 ^
+stm32f10x_GPIO.c(93): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                GPIOA_REG_RESET();
+                ^~~~~~~~~~~~~~~~~
+./stm32f10x_GPIO.h(66): note: expanded from macro 'GPIOA_REG_RESET'
+#define GPIOA_REG_RESET()      do{(RCC->APB2RSTR |=(1<<2));(RCC->APB2RSTR &=~(1<<2));}while(0)
+                                                                          ~~^~~~~~~
+stm32f10x_GPIO.c(95): warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+        else if(pGPIOx=GPIOB){
+                ~~~~~~^~~~~~
+stm32f10x_GPIO.c(95): note: place parentheses around the assignment to silence this warning
+        else if(pGPIOx=GPIOB){
+                      ^
+                (           )
+stm32f10x_GPIO.c(95): note: use '==' to turn this assignment into an equality comparison
+        else if(pGPIOx=GPIOB){
+                      ^
+                      ==
+stm32f10x_GPIO.c(96): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                GPIOB_REG_RESET();
+                ^~~~~~~~~~~~~~~~~
+./stm32f10x_GPIO.h(67): note: expanded from macro 'GPIOB_REG_RESET'
+#define GPIOB_REG_RESET()      do{(RCC->APB2RSTR |=(1<<3));(RCC->APB2RSTR &=~(1<<3));}while(0)
+                                                                          ~~^~~~~~~
+stm32f10x_GPIO.c(99): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                GPIOC_REG_RESET();
+                ^~~~~~~~~~~~~~~~~
+./stm32f10x_GPIO.h(68): note: expanded from macro 'GPIOC_REG_RESET'
+#define GPIOC_REG_RESET()      do{(RCC->APB2RSTR |=(1<<4));(RCC->APB2RSTR &=~(1<<4));}while(0)
+                                                                          ~~^~~~~~~
+stm32f10x_GPIO.c(155): warning: comparison between pointer and integer ('uint32_t' (aka 'unsigned int') and 'GPIO_TypeDef *') [-Wpointer-integer-compare]
+        uint32_t port_code = GPIOBASEADDR_TO_PORTCODE(*pGPIOx);
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+./stm32f10x_GPIO.h(14): note: expanded from macro 'GPIOBASEADDR_TO_PORTCODE'
+#define GPIOBASEADDR_TO_PORTCODE(x)                     ((x==GPIOA)?0:(x==GPIOB)?1:(x==GPIOC)?2:(x==GPIOD)?3:0)
+                                                          ~^ ~~~~~
+stm32f10x_GPIO.c(155): warning: comparison between pointer and integer ('uint32_t' (aka 'unsigned int') and 'GPIO_TypeDef *') [-Wpointer-integer-compare]
+        uint32_t port_code = GPIOBASEADDR_TO_PORTCODE(*pGPIOx);
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+./stm32f10x_GPIO.h(14): note: expanded from macro 'GPIOBASEADDR_TO_PORTCODE'
+#define GPIOBASEADDR_TO_PORTCODE(x)                     ((x==GPIOA)?0:(x==GPIOB)?1:(x==GPIOC)?2:(x==GPIOD)?3:0)
+                                                                       ~^ ~~~~~
+stm32f10x_GPIO.c(155): warning: comparison between pointer and integer ('uint32_t' (aka 'unsigned int') and 'GPIO_TypeDef *') [-Wpointer-integer-compare]
+        uint32_t port_code = GPIOBASEADDR_TO_PORTCODE(*pGPIOx);
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+./stm32f10x_GPIO.h(14): note: expanded from macro 'GPIOBASEADDR_TO_PORTCODE'
+#define GPIOBASEADDR_TO_PORTCODE(x)                     ((x==GPIOA)?0:(x==GPIOB)?1:(x==GPIOC)?2:(x==GPIOD)?3:0)
+                                                                                    ~^ ~~~~~
+stm32f10x_GPIO.c(155): warning: comparison between pointer and integer ('uint32_t' (aka 'unsigned int') and 'GPIO_TypeDef *') [-Wpointer-integer-compare]
+        uint32_t port_code = GPIOBASEADDR_TO_PORTCODE(*pGPIOx);
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+./stm32f10x_GPIO.h(14): note: expanded from macro 'GPIOBASEADDR_TO_PORTCODE'
+#define GPIOBASEADDR_TO_PORTCODE(x)                     ((x==GPIOA)?0:(x==GPIOB)?1:(x==GPIOC)?2:(x==GPIOD)?3:0)
+                                                                                                 ~^ ~~~~~
+stm32f10x_GPIO.c(155): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+        uint32_t port_code = GPIOBASEADDR_TO_PORTCODE(*pGPIOx);
+                 ^
+19 warnings generated.
+compiling stm32f10x_GPIO.c...
+RTE/Device/STM32F103C8/system_stm32f10x.c(64): warning: In file included from...
+C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include\stm32f10x.h(18): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *              - To use or not the peripheral<92>s drivers in application code(i.e. 
+                                               ^
+C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include\stm32f10x.h(19): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *                code will be based on direct access to peripheral<92>s registers 
+                                                                    ^
+C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include\stm32f10x.h(26): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *           - Macros to access peripheral<92>s registers hardware
+                                           ^
+RTE/Device/STM32F103C8/system_stm32f10x.c(166): warning: no previous extern declaration for non-static variable 'AHBPrescTable' [-Wmissing-variable-declarations]
+__I uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
+            ^
+RTE/Device/STM32F103C8/system_stm32f10x.c(166): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+__I uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
+    ^
+4 warnings generated.
+compiling system_stm32f10x.c...
+linking...
+Program Size: Code=1932 RO-data=252 RW-data=0 ZI-data=1632  
+".\Objects\SPI.axf" - 0 Error(s), 44 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.9.0.pack
+                ARM.CMSIS.5.9.0
+                CMSIS (Common Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.6.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F1xx_DFP.2.4.0.pack
+                Keil.STM32F1xx_DFP.2.4.0
+                STMicroelectronics STM32F1 Series Device Support, Drivers and Examples
+   * Component: Startup Version: 1.0.0
+
+<h2>Collection of Component include folders:</h2>
+  ./RTE/Device/STM32F103C8
+  ./RTE/_Target_1
+  C:/Users/Deep Lad/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include
+  C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.6.0
+
+   * Component: Keil::Device:Startup:1.0.0
+      Source file:   Device/Source/ARM/startup_stm32f10x_md.s
+      Source file:   Device/Source/system_stm32f10x.c
+      Include file:  RTE_Driver/Config/RTE_Device.h
+      Source file:   Device/Source/ARM/STM32F1xx_OPT.s
+Build Time Elapsed:  00:00:02
+</pre>
+</body>
+</html>
