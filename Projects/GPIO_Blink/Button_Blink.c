@@ -18,12 +18,7 @@ int main(void)
 	GPIO_Init(&button);
 	
 	while(1){
-		if(GPIO_ReadFromInputPin(GPIOA,6)){
 			GPIO_ToggleOutputPin(GPIOC,13);
-			delay();
-		}
-		else{
-		GPIO_WriteToOutputPin(GPIOC,13,RESET_PIN);
-		}
+		delay();
 	}
 }
