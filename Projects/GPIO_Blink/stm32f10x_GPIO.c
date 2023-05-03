@@ -102,10 +102,10 @@ void GPIO_Deinit(GPIO_TypeDef *pGPIOx){
 
 // GPIO API for Writing Data to GPIO Pin.
 void GPIO_WriteToOutputPin(GPIO_TypeDef *pGPIOx, uint8_t PinNumber, uint8_t Value){
-	if (Value == RESET_PIN){
+	if (Value == SET_PIN){
 		pGPIOx->ODR|=(1<<PinNumber);
 	}
-	if(Value==SET_PIN){
+	if(Value==RESET_PIN){
 		pGPIOx->ODR&=~(1<<PinNumber);
 	}
 }

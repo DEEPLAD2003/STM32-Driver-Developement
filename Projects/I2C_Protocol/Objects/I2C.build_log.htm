@@ -27,6 +27,24 @@ Project File Date:  03/28/2023
 <h2>Output:</h2>
 *** Using Compiler 'V6.19', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build Project 'I2C' - Target 'Target 1'
+E:\STM32\Keil\Projects\STM32F103xx-Driver-Development\STM32-Driver-Developement\Projects\I2C_Protocol\main.c(1): warning: In file included from...
+C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(18): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *              - To use or not the peripheral<92>s drivers in application code(i.e. 
+                                               ^
+C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(19): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *                code will be based on direct access to peripheral<92>s registers 
+                                                                    ^
+C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(26): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *           - Macros to access peripheral<92>s registers hardware
+                                           ^
+C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(95): error: "Please select first the target STM32F10x device used in your application (in stm32f10x.h file)"
+ #error "Please select first the target STM32F10x device used in your application (in stm32f10x.h file)"
+  ^
+C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(486): error: 'core_cm3.h' file not found
+#include "core_cm3.h"
+         ^~~~~~~~~~~~
+3 warnings and 2 errors generated.
+compiling main.c...
 E:\STM32\Keil\Projects\STM32F103xx-Driver-Development\STM32-Driver-Developement\Projects\I2C_Protocol\stm32f10x_I2C.c(1): warning: In file included from...
 E:\STM32\Keil\Projects\STM32F103xx-Driver-Development\STM32-Driver-Developement\Projects\I2C_Protocol\stm32f10x_I2C.h(3): warning: In file included from...
 C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(18): warning: invalid UTF-8 in comment [-Winvalid-utf8]
@@ -38,31 +56,52 @@ C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Includ
 C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(26): warning: invalid UTF-8 in comment [-Winvalid-utf8]
   *           - Macros to access peripheral<92>s registers hardware
                                            ^
-E:\STM32\Keil\Projects\STM32F103xx-Driver-Development\STM32-Driver-Developement\Projects\I2C_Protocol\stm32f10x_I2C.c(1): warning: In file included from...
-E:\STM32\Keil\Projects\STM32F103xx-Driver-Development\STM32-Driver-Developement\Projects\I2C_Protocol\stm32f10x_I2C.h(23): warning: padding struct 'I2C_Config_t' with 3 bytes to align 'I2C_AckControl' [-Wpadded]
-        uint32_t I2C_AckControl;
-                 ^
-E:\STM32\Keil\Projects\STM32F103xx-Driver-Development\STM32-Driver-Developement\Projects\I2C_Protocol\stm32f10x_I2C.c(24): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
-                        RCC->APB1ENR&=~(1<<I2C1_PERI_CLK);
-                                    ~~^~~~~~~~~~~~~~~~~~~
-E:\STM32\Keil\Projects\STM32F103xx-Driver-Development\STM32-Driver-Developement\Projects\I2C_Protocol\stm32f10x_I2C.c(27): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
-                        RCC->APB1ENR&=~(1<<I2C2_PERI_CLK);
-                                    ~~^~~~~~~~~~~~~~~~~~~
-E:\STM32\Keil\Projects\STM32F103xx-Driver-Development\STM32-Driver-Developement\Projects\I2C_Protocol\stm32f10x_I2C.c(42): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
-                        RCC->APB2RSTR&=~(1<<I2C1_PERI_RST);
-                                     ~~^~~~~~~~~~~~~~~~~~~
-E:\STM32\Keil\Projects\STM32F103xx-Driver-Development\STM32-Driver-Developement\Projects\I2C_Protocol\stm32f10x_I2C.c(46): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
-                        RCC->APB2RSTR&=~(1<<I2C1_PERI_RST);
-                                     ~~^~~~~~~~~~~~~~~~~~~
-E:\STM32\Keil\Projects\STM32F103xx-Driver-Development\STM32-Driver-Developement\Projects\I2C_Protocol\stm32f10x_I2C.c(48): warning: no newline at end of file [-Wnewline-eof]
-}
- ^
-9 warnings generated.
+C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(95): error: "Please select first the target STM32F10x device used in your application (in stm32f10x.h file)"
+ #error "Please select first the target STM32F10x device used in your application (in stm32f10x.h file)"
+  ^
+C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(486): error: 'core_cm3.h' file not found
+#include "core_cm3.h"
+         ^~~~~~~~~~~~
+3 warnings and 2 errors generated.
 compiling stm32f10x_I2C.c...
-linking...
-Program Size: Code=724 RO-data=252 RW-data=0 ZI-data=1632  
-FromELF: creating hex file...
-".\Objects\I2C.axf" - 0 Error(s), 9 Warning(s).
+E:\STM32\Keil\Projects\STM32F103xx-Driver-Development\STM32-Driver-Developement\Projects\I2C_Protocol\stm32f10x_GPIO.c(3): warning: In file included from...
+E:\STM32\Keil\Projects\STM32F103xx-Driver-Development\STM32-Driver-Developement\Projects\I2C_Protocol\stm32f10x_GPIO.h(4): warning: In file included from...
+C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(18): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *              - To use or not the peripheral<92>s drivers in application code(i.e. 
+                                               ^
+C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(19): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *                code will be based on direct access to peripheral<92>s registers 
+                                                                    ^
+C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(26): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *           - Macros to access peripheral<92>s registers hardware
+                                           ^
+C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(95): error: "Please select first the target STM32F10x device used in your application (in stm32f10x.h file)"
+ #error "Please select first the target STM32F10x device used in your application (in stm32f10x.h file)"
+  ^
+C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(486): error: 'core_cm3.h' file not found
+#include "core_cm3.h"
+         ^~~~~~~~~~~~
+3 warnings and 2 errors generated.
+compiling stm32f10x_GPIO.c...
+E:\STM32\Keil\Projects\STM32F103xx-Driver-Development\STM32-Driver-Developement\Projects\I2C_Protocol\RTE\Device\STM32F103C8\system_stm32f10x.c(64): warning: In file included from...
+C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(18): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *              - To use or not the peripheral<92>s drivers in application code(i.e. 
+                                               ^
+C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(19): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *                code will be based on direct access to peripheral<92>s registers 
+                                                                    ^
+C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(26): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *           - Macros to access peripheral<92>s registers hardware
+                                           ^
+C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(95): error: "Please select first the target STM32F10x device used in your application (in stm32f10x.h file)"
+ #error "Please select first the target STM32F10x device used in your application (in stm32f10x.h file)"
+  ^
+C:\Users\Deep Lad\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h(486): error: 'core_cm3.h' file not found
+#include "core_cm3.h"
+         ^~~~~~~~~~~~
+3 warnings and 2 errors generated.
+compiling system_stm32f10x.c...
+".\Objects\I2C.axf" - 8 Error(s), 12 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -90,9 +129,10 @@ Package Vendor: Keil
 
    * Component: Keil::Device:Startup:1.0.0
       Source file:   Device/Source/ARM/startup_stm32f10x_md.s
+      Include file:  RTE_Driver/Config/RTE_Device.h
       Source file:   Device/Source/system_stm32f10x.c
       Source file:   Device/Source/ARM/STM32F1xx_OPT.s
-      Include file:  RTE_Driver/Config/RTE_Device.h
+Target not created.
 Build Time Elapsed:  00:00:01
 </pre>
 </body>

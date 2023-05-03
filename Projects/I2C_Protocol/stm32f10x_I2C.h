@@ -35,7 +35,9 @@ typedef struct{
 *												API's supported by the driver
 *						For more information check the function definition
 ***********************************************************************************/
-
+/*
+* API to get the peripheral Clock value.*/
+uint32_t RCC_GET_PERI_VAL(uint8_t peri);
 /*
 *	Enabling/Disabling I2C Peripheral.
 */
@@ -49,7 +51,7 @@ void I2C_PCLK_CRT(I2C_TypeDef *pI2Cx,uint8_t EnorDi);
 /*
 *		Initializing I2C peripheral
 */
-void I2C_Init(I2C_Handle_t *pSPIHandle);
+void I2C_Init(I2C_Handle_t *pI2CHandle);
 
 /*
 *		Deinitalizing I2C peripheral

@@ -31,7 +31,7 @@ void SPI1_Inits(void){
 	SPI1Handle.pSPIx=SPI1;
 	SPI1Handle.SPIConfig.SPI_DeviceMode=SPI_DEVICE_MODE_MASTER;
 	SPI1Handle.SPIConfig.SPI_BusConfig=SPI_BUS_CONFIG_FD;
-	SPI1Handle.SPIConfig.SPI_SclkSpeed=SPI_CLK_SPEED_DIV8;
+	SPI1Handle.SPIConfig.SPI_SclkSpeed=SPI_CLK_SPEED_DIV256;
 	SPI1Handle.SPIConfig.SPI_DFF=SPI_DFF_8BITS;
 	SPI1Handle.SPIConfig.SPI_CPOL=SPI_CPOL_LOW;
 	SPI1Handle.SPIConfig.SPI_CPHA=SPI_CPHA_LOW;
@@ -41,12 +41,15 @@ void SPI1_Inits(void){
 
 
 int main(void){
-	//User data or buffer
 	char data[]="Hello World";
-	// Initializing the GPIO pin for SPI.
 	SPI1_GPIOInits();
-	// Configuringing the SPI pheripheral
-	SPI1_Inits();
-	
-	
+	RCC->APB2ENR|=(1<<12);
+	SPI1->CR1|=(1<<2);
+	SPI1->CR1|=(1<<9);
+	SPI1->CR1|=(1<<8);
+	SPI1->CR1|=(0b111<<3);
+	SPI1->CR1|=(1<<6);
+	while(1){
+		
+	}
 }
