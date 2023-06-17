@@ -44,7 +44,7 @@ void lcd_print_string(char *message)
 
       do
       {
-          lcd_print_char((uint8_t)*message++);
+        lcd_print_char((uint8_t)*message++);
 				mdelay(100);
       }
       while (*message != '\0');

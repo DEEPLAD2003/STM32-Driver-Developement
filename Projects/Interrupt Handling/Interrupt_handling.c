@@ -20,7 +20,7 @@ int main(void){
 	//Interrupt handling
 	GPIO_InterrupConfig(GPIOA,6,GPIO_TRIG_RISING);
 	GPIO_IRQInterruptConfig(IRQ_NO_EXTI9_5,ENABLE);
-	GPIO_IRQPriorityConfig(IRQ_NO_EXTI9_5,15);
+	//GPIO_IRQPriorityConfig(IRQ_NO_EXTI9_5,15);
 	
 	GPIO_Handle_t gpio_led;
 	gpio_led.pGPIOx=GPIOC;

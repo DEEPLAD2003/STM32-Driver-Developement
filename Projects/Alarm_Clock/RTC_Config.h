@@ -4,9 +4,9 @@
 
 /*Structure for getting time in HH:MM:SS format*/
 typedef struct{
-	uint32_t hours;
-	uint32_t minutes;
-	uint32_t seconds;
+	uint8_t hours;
+	uint8_t minutes;
+	uint8_t seconds;
 }RTC_Time;
 
 /*Structure for getting time in HH:MM:SS format*/
@@ -18,4 +18,6 @@ typedef struct{
 
 /* APIS */
 void RTC_Init(void);
-void RTC_GetTime(RTC_Time *time);
+void RTC_GetTime(RTC_Time *time,uint32_t initial_count);
+void RTC_GetDate(RTC_Date *date);
+void RTC_SetAlarm(uint8_t hour,uint8_t minutes,uint8_t seconds);
