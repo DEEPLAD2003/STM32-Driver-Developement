@@ -4,19 +4,17 @@ void RTC_Init(void){
 	RCC->APB1ENR|=RCC_APB1ENR_PWREN;
 	RCC->APB1ENR|=RCC_APB1ENR_BKPEN;
 	
-	
 	PWR->CR|=PWR_CR_DBP;
 	
 	
-	RCC->CSR|=RCC_CSR_LSION;
+	RCC->BDCR|=RCC_BDCR_LSEON;
 	
-	
-	while (!RCC->CSR>>1);
-	RCC->BDCR|=0x8200;
-	
+	while (!RCC->BDCR>>RCC_BDCR_LSERDY);
+	RCC->BDCR|=0x8100;
 	
 	while(!RTC->CRL>>RTC_CRL_RSF);
-	RTC->CRH|=RTC_CRH_SECIE;
+	RCC->BDCR&=~RCC_BDCR_BDRST;
+	
 		
   
 	RTC->CRL|=(1<<4);
@@ -25,7 +23,7 @@ void RTC_Init(void){
 	RTC->CRL&=~(1<<4);
 	while(!RTC->CRL>>5);
 	presclr=RTC->PRLL;
-	PWR->CR&=~PWR_CR_DBP;
+	//PWR->CR&=~PWR_CR_DBP;
 
 
 	
