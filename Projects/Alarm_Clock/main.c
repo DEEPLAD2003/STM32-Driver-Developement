@@ -19,18 +19,18 @@ int main(void){
 	buzzer.GPIO_PinConfig.GPIO_PinNumber=12;
 	buzzer.GPIO_PinConfig.GPIO_PinMode=GPIO_MODE_OUT50;
 	buzzer.GPIO_PinConfig.GPIO_PinMode=GPIO_CNF_PP;
-	GPIO_Init(&buzzer);
+	GPIO_Init(&buzzer);*/
 	
 	
 	RTC_Time time;
 	lcd_init();
 	RTC_Init();
 	char time_buffer[14];
-	lcd_display_clear();*/
+	lcd_display_clear();
 	while(1){
 		lcd_display_return_home();
-		/*RTC_GetTime(&time,412110);
+		RTC_GetTime(&time,412110);
 		sprintf(time_buffer,"TIME-%d:%d:%d",time.hours,time.minutes,time.seconds);
-		lcd_print_string(time_buffer);*/
+		lcd_print_string(time_buffer);
 	}
 }

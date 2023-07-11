@@ -1,6 +1,5 @@
 #include "RTC_Config.h"
 void RTC_Init(void){
-	uint16_t presclr;
 	RCC->APB1ENR|=RCC_APB1ENR_PWREN;
 	RCC->APB1ENR|=RCC_APB1ENR_BKPEN;
 	
@@ -22,8 +21,7 @@ void RTC_Init(void){
 	RTC->PRLL=0x7FFF;
 	RTC->CRL&=~(1<<4);
 	while(!RTC->CRL>>5);
-	presclr=RTC->PRLL;
-	//PWR->CR&=~PWR_CR_DBP;
+	PWR->CR&=~PWR_CR_DBP;
 
 
 	

@@ -25,12 +25,6 @@ int main(void){
 	
 	RTC_Init();
 	while(1){
-		
-		
-		if(RTC->CNTL>0x20){
-			GPIO_ToggleOutputPin(GPIOC,13);
-			delay();
-		}
 		RTC_GetTime(&time);
 		RTC_GetDate(&date);
 	}
