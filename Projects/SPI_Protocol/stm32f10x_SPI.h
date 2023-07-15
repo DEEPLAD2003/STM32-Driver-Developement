@@ -13,6 +13,8 @@ typedef struct{
 	uint8_t SPI_CPOL;
 	uint8_t SPI_CPHA;
 	uint8_t SPI_SSM;
+	uint8_t SPI_Transmission_Format;
+	uint8_t SPI_MultiMaster;
 }SPI_Config_t;
 
 /*
@@ -36,6 +38,7 @@ typedef struct{
 #define SPI_BUS_CONFIG_FD						1
 #define SPI_BUS_CONFIG_HD						2
 #define SPI_BUS_CONFIG_RXONLY				3
+#define SPI_BUS_CONFIG_TXONLY				4
 
 /*
 *	Macros for SPI Clock Configuration
@@ -79,6 +82,18 @@ typedef struct{
 #define SPI_SSI_DISABLE				0
 #define SPI_SSI_ENABLE 				1
 
+/*
+*	Macros for Data Transmission Format (MSB or LSB first)
+*/
+#define SPI_DATA_TRANS_LSB				1
+#define SPI_DATA_TRANS_MSB				0
+
+/*
+*	Macros for Data Transmission Format (MSB or LSB first)
+*/
+#define SPI_MULTI_MSTR_EN				0
+#define SPI_MULTI_MSTR_DIS				1
+
 /*********************************************************************************
 *												API's supported by the driver
 *						For more information check the function definition
@@ -87,7 +102,7 @@ typedef struct{
 /*
 *	Enabling/Disabling SPI Peripheral.
 */
-void SPI_ENABLE_OR_DISABLE(SPI_TypeDef *pSPIx,uint8_t EnorDi);
+void SPI_EN_DIS(SPI_TypeDef *pSPIx,uint8_t EnorDi);
 
 /*
 *		Peripheral clock Setup.
@@ -107,7 +122,7 @@ void SPI_Dinit(SPI_TypeDef *pSPIx);
 /*
 *		Data send and Recieve
 */
-void SPI_SendData(SPI_TypeDef *pSPIx,uint8_t *pTxBuffer,uint32_t Len);
+void SPI_SendData(SPI_Handle_t *pspihandle,uint8_t *pTxBuffer,uint32_t Len);
 void SPI_ReadData(SPI_TypeDef *pSPIx,uint8_t *pRxBuffer,uint32_t Len);
 
 /*

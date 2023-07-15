@@ -389,30 +389,35 @@
               <FileType>1</FileType>
               <FilePath>.\SPI_Tx_Testing.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>User_Inc</GroupName>
-          <Files>
             <File>
               <FileName>stm32f10x_GPIO.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\stm32f10x_GPIO.c</FilePath>
             </File>
             <File>
+              <FileName>stm32f10x_SPI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\stm32f10x_SPI.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>User_Inc</GroupName>
+          <Files>
+            <File>
               <FileName>stm32f10x_GPIO.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\stm32f10x_GPIO.h</FilePath>
             </File>
             <File>
-              <FileName>stm32f10x_SPI.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\stm32f10x_SPI.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f10x_SPI.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\stm32f10x_SPI.h</FilePath>
+            </File>
+            <File>
+              <FileName>main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\main.h</FilePath>
             </File>
           </Files>
         </Group>

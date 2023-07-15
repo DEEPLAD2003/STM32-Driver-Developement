@@ -62,7 +62,7 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle){
 	GPIO_PCLK_CRT(pGPIOHandle->pGPIOx,ENABLE);
 	uint32_t temp=0;
 	//Configuration of GPIO LOW Register.
-	if (pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber<7){
+	if (pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber<=7){
 		pGPIOHandle->pGPIOx->CRL|=(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode<<(pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber*4));
 		if (pGPIOHandle->GPIO_PinConfig.GPIO_Config==0){
 			pGPIOHandle->pGPIOx->CRL&=~(1<<((pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber*4)+2));
@@ -183,5 +183,5 @@ void GPIO_IRQHandling(uint8_t PinNumber){
 }
 //Delay Function
 void delay(void){
-		for (int i=0;i<1000000;i++);
+		for (int i=0;i<100000;i++);
 }

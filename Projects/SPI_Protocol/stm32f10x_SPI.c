@@ -1,9 +1,9 @@
 #include "stm32f10x_SPI.h"
-
+#include "stm32f10x_GPIO.h"
 /*
 *	Enabling/Disabling SPI Peripheral.
 */
-void SPI_ENABLE_OR_DISABLE(SPI_TypeDef *pSPIx,uint8_t EnorDi){
+void SPI_EN_DIS(SPI_TypeDef *pSPIx,uint8_t EnorDi){
 	if (EnorDi==ENABLE){
 		pSPIx->CR1|=(1<<6);
 	}
@@ -19,24 +19,18 @@ void SPI_ENABLE_OR_DISABLE(SPI_TypeDef *pSPIx,uint8_t EnorDi){
 void SPI_PCLK_CRT(SPI_TypeDef *pSPIx,uint8_t EnorDi){
 	if (EnorDi==ENABLE){
 		if (pSPIx==SPI1){
-			RCC->APB2ENR|=(1<<12);
+			RCC->APB2ENR|=RCC_APB2ENR_SPI1EN;
 		}
 		else if (pSPIx==SPI2){
-			RCC->APB1ENR|=(1<<14);
-		}
-		else if (pSPIx==SPI3){
-			RCC->APB1ENR|=(1<<15);
+			RCC->APB1ENR|=RCC_APB1ENR_SPI2EN;
 		}
 	}
 	else if (EnorDi==DISABLE){
 		if (pSPIx==SPI1){
-			RCC->APB2ENR&=~(1<<12);
+			RCC->APB2ENR&=~RCC_APB2ENR_SPI1EN;
 		}
 		else if (pSPIx==SPI2){
-			RCC->APB1ENR&=~(1<<14);
-		}
-		else if (pSPIx==SPI3){
-			RCC->APB1ENR&=~(1<<15);
+			RCC->APB1ENR&=~RCC_APB1ENR_SPI2EN;
 		}
 	}
 }
@@ -49,47 +43,79 @@ void SPI_Init(SPI_Handle_t *pSPIHandle){
 	SPI_PCLK_CRT(pSPIHandle->pSPIx,ENABLE);
 	
 	//Configuring SPI_CR1 register.
-	//1. Device Mode
-	if (pSPIHandle->SPIConfig.SPI_DeviceMode==SPI_DEVICE_MODE_MASTER){
-		pSPIHandle->pSPIx->CR1|=(1<<2);
-	}
-	else if (pSPIHandle->SPIConfig.SPI_DeviceMode==SPI_DEVICE_MODE_SLAVE){
-		pSPIHandle->pSPIx->CR1&=~(1<<2);
-	}
-	
-	//2. BUS Configuration
-	if (pSPIHandle->SPIConfig.SPI_BusConfig==SPI_BUS_CONFIG_FD){
-		pSPIHandle->pSPIx->CR1&=~(1<<15);
-		
-	}
-	else if (pSPIHandle->SPIConfig.SPI_BusConfig==SPI_BUS_CONFIG_HD){
-		pSPIHandle->pSPIx->CR1|=(1<<15);
-	}
-	/*else if (pSPIHandle->SPIConfig.SPI_BusConfig==SPI_BUS_CONFIG_RXONLY){
-		pSPIHandle->pSPIx->CR1|=(1<<15);
-		pSPIHandle->pSPIx->CR1&=~(1<<10);
-	}*/
-	//3. Clock Configuration
+	//1. Clock Speed Selection (Baud rate)
 	pSPIHandle->pSPIx->CR1|=(pSPIHandle->SPIConfig.SPI_SclkSpeed<<3);
 	
-	//4. DFF Configuration
-	pSPIHandle->pSPIx->CR1|=(pSPIHandle->SPIConfig.SPI_DFF<<11);
-	
-	//5. CPOL Configuration
-	pSPIHandle->pSPIx->CR1|=(pSPIHandle->SPIConfig.SPI_CPOL<<1);
-	
-	//6. CPHA Configuration
-	pSPIHandle->pSPIx->CR1|=(pSPIHandle->SPIConfig.SPI_CPHA<<0);
-	
-	//7 SSM Configuration.
-	if (pSPIHandle->SPIConfig.SPI_SSM==ENABLE){
-		pSPIHandle->pSPIx->CR1|=(1<<9);
+	//2. Clock Phase and Ploarity
+	if (pSPIHandle->SPIConfig.SPI_CPHA && pSPIHandle->SPIConfig.SPI_CPOL){
+		pSPIHandle->pSPIx->CR1|=SPI_CR1_CPHA;
+		pSPIHandle->pSPIx->CR1|=SPI_CR1_CPOL;
 	}
-	else if (pSPIHandle->SPIConfig.SPI_SSM==DISABLE){
-		pSPIHandle->pSPIx->CR1&=~(1<<9);
+	else if (!pSPIHandle->SPIConfig.SPI_CPHA && pSPIHandle->SPIConfig.SPI_CPOL){
+		pSPIHandle->pSPIx->CR1&=~SPI_CR1_CPHA;
+		pSPIHandle->pSPIx->CR1|=SPI_CR1_CPOL;
+	}
+	else if (pSPIHandle->SPIConfig.SPI_CPHA && !pSPIHandle->SPIConfig.SPI_CPOL){
+		pSPIHandle->pSPIx->CR1&=~SPI_CR1_CPHA;
+		pSPIHandle->pSPIx->CR1&=~SPI_CR1_CPOL;
+	}
+	else if (!pSPIHandle->SPIConfig.SPI_CPHA && !pSPIHandle->SPIConfig.SPI_CPOL){
+		pSPIHandle->pSPIx->CR1&=~SPI_CR1_CPHA;
+		pSPIHandle->pSPIx->CR1&=~SPI_CR1_CPOL;
+	}
+	
+	//  3. Data frame format (8 bit or 16 bit) 
+	if (pSPIHandle->SPIConfig.SPI_DFF){
+		pSPIHandle->pSPIx->CR1|=SPI_CR1_DFF;
+	}
+	else if(~pSPIHandle->SPIConfig.SPI_DFF){
+		pSPIHandle->pSPIx->CR1&=~SPI_CR1_DFF;
+	}
+	
+	//  4. Data Transmission format (MSB or LSB First)
+	if (pSPIHandle->SPIConfig.SPI_Transmission_Format){
+		pSPIHandle->pSPIx->CR1|=SPI_CR1_LSBFIRST;
+	}
+	if (!pSPIHandle->SPIConfig.SPI_Transmission_Format){
+		pSPIHandle->pSPIx->CR1&=~SPI_CR1_LSBFIRST;
+	}
+	
+	//  5. Slave Management (Hardware or Software) and Multimaster Capability
+	if (pSPIHandle->SPIConfig.SPI_SSM){
+		pSPIHandle->pSPIx->CR1|=SPI_CR1_SSM;
+		pSPIHandle->pSPIx->CR1|=SPI_CR1_SSI;
+	}
+	else if (!pSPIHandle->SPIConfig.SPI_SSM && pSPIHandle->SPIConfig.SPI_MultiMaster){
+		pSPIHandle->pSPIx->CR1&=~SPI_CR1_SSM;
+		pSPIHandle->pSPIx->CR1|=SPI_CR2_SSOE;
+	}
+	else if (!pSPIHandle->SPIConfig.SPI_SSM && !pSPIHandle->SPIConfig.SPI_MultiMaster){
+		pSPIHandle->pSPIx->CR1&=~SPI_CR1_SSM;
+		pSPIHandle->pSPIx->CR1&=~SPI_CR2_SSOE;
+	}
+	
+	//  6. Bus Configuration (Full Duplex or Half Duplex)
+	if (pSPIHandle->SPIConfig.SPI_BusConfig==1 && pSPIHandle->SPIConfig.SPI_BusConfig==4){
+		pSPIHandle->pSPIx->CR1&=~SPI_CR1_BIDIMODE;
+		pSPIHandle->pSPIx->CR1&=~SPI_CR1_RXONLY;
+	}
+	else if(pSPIHandle->SPIConfig.SPI_BusConfig==2){
+		pSPIHandle->pSPIx->CR1|=SPI_CR1_BIDIMODE;
+	}
+	else if(pSPIHandle->SPIConfig.SPI_BusConfig==3){
+		pSPIHandle->pSPIx->CR1&=~SPI_CR1_BIDIMODE;
+		pSPIHandle->pSPIx->CR1|=SPI_CR1_RXONLY;
+	}
+	
+	//  7. Device Mode (Master or Slave)
+	if (pSPIHandle->SPIConfig.SPI_DeviceMode){
+		pSPIHandle->pSPIx->CR1|=SPI_CR1_MSTR;
+	}
+	else if(!pSPIHandle->SPIConfig.SPI_DeviceMode){
+		pSPIHandle->pSPIx->CR1&=~SPI_CR1_MSTR;
 	}
 }
-
+	
 /*
 *		Deinitalizing SPI peripheral
 */
@@ -109,42 +135,62 @@ void SPI_Dinit(SPI_TypeDef *pSPIx){
 }	
 
 /*
-*		Data send and Recieve
+*		Data send and Recieve (This is a Blocking Call)
 */
-// Thi is a Blocking Call.
-void SPI_SendData(SPI_TypeDef *pSPIx,uint8_t *pTxBuffer,uint32_t Len){  
+void SPI_SendData(SPI_Handle_t *pspihandle,uint8_t *pTxBuffer,uint32_t Len){
+	uint16_t RxBuffer,buffer;
+	uint16_t buffer1,buffer2;
+	if(Len%2!=0 && pspihandle->SPIConfig.SPI_DFF==SPI_DFF_16BITS){
+			Len++;
+	}
+	while(!(pspihandle->pSPIx->SR & (SPI_SR_TXE)));
+	if(pspihandle->pSPIx->CR1 & (SPI_CR1_DFF)){
+		buffer1=*pTxBuffer;
+		pTxBuffer++;
+		buffer2=*pTxBuffer;
+		buffer=(buffer1<<8)+buffer2;
+		pspihandle->pSPIx->DR|=buffer;
+		pTxBuffer+=1;
+		Len-=2;
+	}
+	else if(!(pspihandle->pSPIx->CR1 & SPI_CR1_DFF)){
+		pspihandle->pSPIx->DR|=*pTxBuffer;
+		pTxBuffer++;
+		Len--;
+	}	
 	while(Len>0){
-		// Waiting for Tx Buffer to clear
-		while(!(pSPIx->SR & (1<<1)));
-		if (pSPIx->CR1 & (1<<11)){
-			// 16 bit data
-			// Load data to Data register
-			pSPIx->DR	|= *((uint16_t*)pTxBuffer);
-			Len-=2;
-			(uint16_t*)pTxBuffer++;
-		}
-		else{
-			// 8 bit data
-			// Load data to Data register
-			pSPIx->DR |= *pTxBuffer;
-			Len--;
+		while(!(pspihandle->pSPIx->SR & (SPI_SR_TXE)));
+		if(pspihandle->pSPIx->CR1 & SPI_CR1_DFF){
+			//16 bit DFF
+			buffer1=*pTxBuffer;
 			pTxBuffer++;
+			buffer2=*pTxBuffer;
+			buffer=(buffer1<<8)+buffer2;
+			pspihandle->pSPIx->DR|=buffer;
+			pTxBuffer+=1;
+			Len-=2;
+			if (pspihandle->SPIConfig.SPI_BusConfig==SPI_BUS_CONFIG_TXONLY){
+				while(!pspihandle->pSPIx->SR>>(SPI_SR_RXNE));
+				RxBuffer=pspihandle->pSPIx->SR;
+			}
+		}
+		else if(!(pspihandle->pSPIx->CR1 & SPI_CR1_DFF)){
+			pspihandle->pSPIx->DR|=*pTxBuffer;
+			pTxBuffer++;
+			Len--;
+			if (pspihandle->SPIConfig.SPI_BusConfig==SPI_BUS_CONFIG_TXONLY){
+				while(!pspihandle->pSPIx->SR>>(SPI_SR_RXNE));
+				RxBuffer=pspihandle->pSPIx->SR;
+			}
+		}
+		if (pspihandle->SPIConfig.SPI_BusConfig==SPI_BUS_CONFIG_TXONLY){
+				while(!pspihandle->pSPIx->SR>>(SPI_SR_RXNE));
+				RxBuffer=pspihandle->pSPIx->SR;
 		}
 	}
+	while(pspihandle->pSPIx->SR & SPI_SR_BSY);
 }
 
-
-/*
-*	SSI Configuration
-*/
-void SPI_SSI_Config(SPI_TypeDef *pSPIx,uint8_t EnorDi){
-	if (EnorDi==ENABLE){
-		pSPIx->CR1|=(1<<8);
-	}
-	else if(EnorDi==DISABLE){
-		pSPIx->CR1&=~(1<<8);
-	}
-}
 
 void SPI_ReadData(SPI_TypeDef *pSPIx,uint8_t *pRxBuffer,uint32_t Len);
 

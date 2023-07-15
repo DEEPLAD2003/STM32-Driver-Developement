@@ -22,13 +22,13 @@ Dialog DLL:      TCM.DLL V1.56.4.0
  
 <h2>Project:</h2>
 E:\STM32\Keil\Projects\STM32F103xx-Driver-Development\STM32-Driver-Developement\Projects\SPI_Protocol\SPI.uvprojx
-Project File Date:  03/27/2023
+Project File Date:  07/14/2023
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.19', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'Target 1'
 SPI_Tx_Testing.c(1): warning: In file included from...
-./stm32f10x_GPIO.h(4): warning: In file included from...
+./main.h(1): warning: In file included from...
 C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include\stm32f10x.h(18): warning: invalid UTF-8 in comment [-Winvalid-utf8]
   *              - To use or not the peripheral<92>s drivers in application code(i.e. 
                                                ^
@@ -38,35 +38,21 @@ C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Includ
 C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include\stm32f10x.h(26): warning: invalid UTF-8 in comment [-Winvalid-utf8]
   *           - Macros to access peripheral<92>s registers hardware
                                            ^
-SPI_Tx_Testing.c(10): warning: no previous prototype for function 'SPI1_GPIOInits' [-Wmissing-prototypes]
-void SPI1_GPIOInits(void){
-     ^
-SPI_Tx_Testing.c(10): note: declare 'static' if the function is not intended to be used outside of this translation unit
-void SPI1_GPIOInits(void){
-^
-static 
-SPI_Tx_Testing.c(2): warning: In file included from...
-./stm32f10x_SPI.h(23): warning: padding struct 'SPI_Handle_t' with 1 byte to align 'pSPIx' [-Wpadded]
+SPI_Tx_Testing.c(3): warning: In file included from...
+./stm32f10x_SPI.h(25): warning: padding struct 'SPI_Handle_t' with 3 bytes to align 'pSPIx' [-Wpadded]
         SPI_TypeDef  *pSPIx;
                       ^
-SPI_Tx_Testing.c(29): warning: no previous prototype for function 'SPI1_Inits' [-Wmissing-prototypes]
-void SPI1_Inits(void){
-     ^
-SPI_Tx_Testing.c(29): note: declare 'static' if the function is not intended to be used outside of this translation unit
-void SPI1_Inits(void){
-^
-static 
-SPI_Tx_Testing.c(50): warning: binary integer literals are a GNU extension [-Wgnu-binary-literal]
-        SPI1->CR1|=(0b111<<3);
-                    ^
-SPI_Tx_Testing.c(44): warning: unused variable 'data' [-Wunused-variable]
-        char data[]="Hello World";
+SPI_Tx_Testing.c(28): warning: no previous extern declaration for non-static variable 'SPI1Handle' [-Wmissing-variable-declarations]
+SPI_Handle_t SPI1Handle;
              ^
-8 warnings generated.
+SPI_Tx_Testing.c(28): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+SPI_Handle_t SPI1Handle;
+^
+5 warnings generated.
 compiling SPI_Tx_Testing.c...
 linking...
-Program Size: Code=1484 RO-data=252 RW-data=0 ZI-data=1632  
-".\Objects\SPI.axf" - 0 Error(s), 8 Warning(s).
+Program Size: Code=3020 RO-data=252 RW-data=0 ZI-data=1648  
+".\Objects\SPI.axf" - 0 Error(s), 5 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -93,11 +79,11 @@ Package Vendor: Keil
    * Component: ARM::CMSIS:CORE:5.6.0
 
    * Component: Keil::Device:Startup:1.0.0
-      Source file:   Device/Source/ARM/startup_stm32f10x_md.s
-      Source file:   Device/Source/system_stm32f10x.c
       Include file:  RTE_Driver/Config/RTE_Device.h
+      Source file:   Device/Source/ARM/startup_stm32f10x_md.s
       Source file:   Device/Source/ARM/STM32F1xx_OPT.s
-Build Time Elapsed:  00:00:02
+      Source file:   Device/Source/system_stm32f10x.c
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>
