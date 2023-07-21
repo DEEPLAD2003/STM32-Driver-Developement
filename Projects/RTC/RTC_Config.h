@@ -21,4 +21,6 @@ void RTC_Init(void);
 void RTC_GetTime(RTC_Time *time);
 void RTC_GetDate(RTC_Date *date);
 uint8_t Leap_Year(uint32_t year);
+void Enable_Alarm(void);
+void Disable_Alarm(void);
 void RTC_SetAlarm(uint8_t hour,uint8_t minutes,uint8_t seconds);

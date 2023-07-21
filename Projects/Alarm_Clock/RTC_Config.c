@@ -31,6 +31,7 @@ void RTC_Init(void){
 	
 }
 void RTC_GetTime(RTC_Time *time,uint32_t initial_count){
+	
 	uint16_t ctrl_val=RTC->CNTL;
 	uint16_t ctrh_val=(RTC->CNTH & 0xF);
 	uint32_t ctr_val= (ctrh_val<<16)+(ctrl_val)+initial_count;

@@ -1,4 +1,11 @@
 #include "RTC_Config.h"
+
+p_sec=0;   //((RTC->CNTH<<16)+(RTC->CNTL));
+uint32_t c_sec=0;
+
+static uint32_t p_days=0;//((RTC->CNTH<<16)+(RTC->CNTL))/86400;
+uint32_t c_days=0;
+
 void RTC_Init(void){
 	RCC->APB1ENR|=RCC_APB1ENR_PWREN;
 	RCC->APB1ENR|=RCC_APB1ENR_BKPEN;
@@ -8,27 +15,25 @@ void RTC_Init(void){
 	
 	RCC->BDCR|=RCC_BDCR_LSEON;
 	
-	while (!RCC->BDCR>>RCC_BDCR_LSERDY);
+	while (!(RCC->BDCR && RCC_BDCR_LSERDY));
 	RCC->BDCR|=0x8100;
 	
-	while(!RTC->CRL>>RTC_CRL_RSF);
+	while(!(RTC->CRL && RTC_CRL_RSF));
 	RCC->BDCR&=~RCC_BDCR_BDRST;
 	
 		
   
-	RTC->CRL|=(1<<4);
-	while(!RTC->CRL>>5);
+	while(!(RTC->CRL && RTC_CRL_RTOFF));
+	RTC->CRL|=RTC_CRL_CNF;
+	RTC->CRH|=RTC_CRH_SECIE;
 	RTC->PRLL=0x7FFF;
-	RTC->CRL&=~(1<<4);
-	while(!RTC->CRL>>5);
-	PWR->CR&=~PWR_CR_DBP;
-
-
+	RTC->CRL&=~RTC_CRL_CNF;
 	
+	while(!(RTC->CRL && RTC_CRL_RTOFF));
+	PWR->CR&=~PWR_CR_DBP;
 }
 
-p_sec=0;   //((RTC->CNTH<<16)+(RTC->CNTL));
-uint32_t c_sec=0;
+
 void RTC_GetTime(RTC_Time *time){
 	uint16_t counter_low=RTC->CNTL;
 	uint16_t counter_high=RTC->CNTH;
@@ -67,9 +72,6 @@ void RTC_GetTime(RTC_Time *time){
 	time->minutes=(ctr_val%0xE10)/0x3C;
 	time->seconds=(ctr_val%0xE10)%0x3C;*/
 }
-
-static uint32_t p_days=0;//((RTC->CNTH<<16)+(RTC->CNTL))/86400;
-uint32_t c_days=0;
 
 
 void RTC_GetDate(RTC_Date *date){
@@ -138,6 +140,7 @@ void RTC_GetDate(RTC_Date *date){
 
 
 
+
 uint8_t Leap_Year(uint32_t year){
 	if (year%400)
 		return 1;
@@ -151,6 +154,37 @@ uint8_t Leap_Year(uint32_t year){
 				return 0;
 		}
 	}
+}
+
+
+void Enable_Alarm(void){
+	//Polling RTOFF bit in CRL register
+	while(!(RTC->CRL && RTC_CRL_RTOFF));
+	
+	//Settiing the CNF bit to configure one or more register.
+	RTC->CRL|=RTC_CRL_CNF;
+	
+	// Enabling the Interrupt for the alarm.
+	RTC->CRH|=RTC_CRH_ALRIE;
+	
+	// Clearing the the CNF bit 
+	RTC->CRL&=~RTC_CRL_CNF;
+}
+void Disable_Alarm(void)
+{
+	//Polling RTOFF bit in CRL register
+	while(!(RTC->CRL && RTC_CRL_RTOFF));
+	
+	//Settiing the CNF bit to configure one or more register.
+	RTC->CRL|=RTC_CRL_CNF;
+	
+	// Enabling the Interrupt for the alarm.
+	RTC->CRH|=RTC_CRH_ALRIE;
+	
+	// Clearing the the CNF bit 
+	RTC->CRL&=~RTC_CRL_CNF;
+	
+	while(!(RTC->CRL && RTC_CRL_RTOFF));
 }
 
 void RTC_SetAlarm(uint8_t hour,uint8_t minutes,uint8_t seconds){

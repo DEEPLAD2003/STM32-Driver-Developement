@@ -13,13 +13,13 @@ void RTCAlarm_IRQHandler(void){
 int main(void){
 
 	/* initializing the Buzzer pin for output of buzzer.*/
-	/*GPIO_Handle_t buzzer;
+	GPIO_Handle_t buzzer;
 	buzzer.pGPIOx=GPIOB;
 	GPIO_PCLK_CRT(GPIOB,ENABLE);
 	buzzer.GPIO_PinConfig.GPIO_PinNumber=12;
 	buzzer.GPIO_PinConfig.GPIO_PinMode=GPIO_MODE_OUT50;
 	buzzer.GPIO_PinConfig.GPIO_PinMode=GPIO_CNF_PP;
-	GPIO_Init(&buzzer);*/
+	GPIO_Init(&buzzer);
 	
 	
 	RTC_Time time;
