@@ -12,25 +12,19 @@ void RTC_Init(void){
 	
 	PWR->CR|=PWR_CR_DBP;
 	
-	
+	RCC->BDCR&=~RCC_BDCR_BDRST;
 	RCC->BDCR|=RCC_BDCR_LSEON;
-	
 	while (!(RCC->BDCR && RCC_BDCR_LSERDY));
-	RCC->BDCR|=0x8100;
+	RCC->BDCR|=RCC_BDCR_RTCSEL_LSE;
+	
+	RCC->BDCR|=RCC_BDCR_RTCEN;
 	
 	while(!(RTC->CRL && RTC_CRL_RSF));
-	RCC->BDCR&=~RCC_BDCR_BDRST;
-	
-		
-  
 	while(!(RTC->CRL && RTC_CRL_RTOFF));
 	RTC->CRL|=RTC_CRL_CNF;
 	RTC->CRH|=RTC_CRH_SECIE;
 	RTC->PRLL=0x7FFF;
 	RTC->CRL&=~RTC_CRL_CNF;
-	
-	while(!(RTC->CRL && RTC_CRL_RTOFF));
-	PWR->CR&=~PWR_CR_DBP;
 }
 
 
@@ -138,9 +132,6 @@ void RTC_GetDate(RTC_Date *date){
 	}
 }
 
-
-
-
 uint8_t Leap_Year(uint32_t year){
 	if (year%400)
 		return 1;
@@ -159,7 +150,7 @@ uint8_t Leap_Year(uint32_t year){
 
 void Enable_Alarm(void){
 	//Polling RTOFF bit in CRL register
-	while(!(RTC->CRL && RTC_CRL_RTOFF));
+	while(!(RTC->CRL & RTC_CRL_RTOFF));
 	
 	//Settiing the CNF bit to configure one or more register.
 	RTC->CRL|=RTC_CRL_CNF;
@@ -173,31 +164,40 @@ void Enable_Alarm(void){
 void Disable_Alarm(void)
 {
 	//Polling RTOFF bit in CRL register
-	while(!(RTC->CRL && RTC_CRL_RTOFF));
+	while(!(RTC->CRL & RTC_CRL_RTOFF));
 	
 	//Settiing the CNF bit to configure one or more register.
 	RTC->CRL|=RTC_CRL_CNF;
 	
-	// Enabling the Interrupt for the alarm.
-	RTC->CRH|=RTC_CRH_ALRIE;
+	// Disabling the Interrupt for the alarm.
+	RTC->CRH&=~RTC_CRH_ALRIE;
 	
 	// Clearing the the CNF bit 
 	RTC->CRL&=~RTC_CRL_CNF;
 	
-	while(!(RTC->CRL && RTC_CRL_RTOFF));
+	while(!(RTC->CRL & RTC_CRL_RTOFF));
 }
 
 void RTC_SetAlarm(uint8_t hour,uint8_t minutes,uint8_t seconds){
-	uint16_t alarm;
-	uint16_t counter=(hour*3600)+(minutes*60)+seconds;
-	RTC->CRH|=(1<<1);
-	RTC->CRL|=(1<<4);
-	while(!RTC->CRL>>5);
-	RTC->ALRL=counter;
-	RTC->CRL&=~(1<<4);
-	while(!RTC->CRL>>5);
-	alarm=RTC->ALRL;
+	uint32_t alarm_count=(hour*3600)+(minutes*60)+seconds;
+	uint32_t actual_count=((uint32_t)RTC->CNTH<<16)+(uint32_t)(RTC->CNTL);
+	alarm_count+=actual_count;
+	while(!(RTC->CRL & RTC_CRL_RTOFF));
+	RTC->CRL|=RTC_CRL_CNF;
+	RTC->ALRH=(uint16_t)(alarm_count>>16 & 0xFFFF);
+	RTC->ALRL=(uint16_t)(alarm_count & 0xFFFF);
+	RTC->CRL&=~RTC_CRL_CNF;
+}
 
+void RTC_AlarmInterrupt(uint8_t EnorDi){
+	EXTI->IMR|=EXTI_IMR_MR17;
+	EXTI->FTSR|=EXTI_FTSR_TR17;
+	if (EnorDi==ENABLE){
+		NVIC_EnableIRQ(41);
+	}
+	if (EnorDi==DISABLE){
+		NVIC_DisableIRQ(41);
+	}
 }
 
 

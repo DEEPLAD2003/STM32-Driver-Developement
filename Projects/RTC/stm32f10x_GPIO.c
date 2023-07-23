@@ -183,5 +183,5 @@ void GPIO_IRQHandling(uint8_t PinNumber){
 }
 //Delay Function
 void delay(void){
-		for (int i=0;i<100000;i++);
+		for (int i=0;i<1000000;i++);
 }

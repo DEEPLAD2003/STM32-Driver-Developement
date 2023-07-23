@@ -24,3 +24,5 @@ uint8_t Leap_Year(uint32_t year);
 void Enable_Alarm(void);
 void Disable_Alarm(void);
 void RTC_SetAlarm(uint8_t hour,uint8_t minutes,uint8_t seconds);
+void RTC_AlarmInterrupt(uint8_t EnorDi);
+void RTCAlarm_IRQHandler(void); 

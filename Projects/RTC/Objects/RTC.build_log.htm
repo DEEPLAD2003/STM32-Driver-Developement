@@ -27,7 +27,125 @@ Project File Date:  06/17/2023
 <h2>Output:</h2>
 *** Using Compiler 'V6.19', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'Target 1'
-".\Objects\RTC.axf" - 0 Error(s), 0 Warning(s).
+RTC_Config.c(1): warning: In file included from...
+./RTC_Config.h(1): warning: In file included from...
+C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include\stm32f10x.h(18): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *              - To use or not the peripheral<92>s drivers in application code(i.e. 
+                                               ^
+C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include\stm32f10x.h(19): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *                code will be based on direct access to peripheral<92>s registers 
+                                                                    ^
+C:/Users/Deep Lad/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include\stm32f10x.h(26): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *           - Macros to access peripheral<92>s registers hardware
+                                           ^
+RTC_Config.c(3): warning: type specifier missing, defaults to 'int' [-Wimplicit-int]
+p_sec=0;   //((RTC->CNTH<<16)+(RTC->CNTL));
+^
+int
+RTC_Config.c(3): warning: no previous extern declaration for non-static variable 'p_sec' [-Wmissing-variable-declarations]
+note: declare 'static' if the variable is not intended to be used outside of this translation unit
+RTC_Config.c(3): warning: // comments are not allowed in this language [-Wcomment]
+p_sec=0;   //((RTC->CNTH<<16)+(RTC->CNTL));
+           ^
+RTC_Config.c(4): warning: no previous extern declaration for non-static variable 'c_sec' [-Wmissing-variable-declarations]
+uint32_t c_sec=0;
+         ^
+RTC_Config.c(4): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+uint32_t c_sec=0;
+^
+RTC_Config.c(7): warning: no previous extern declaration for non-static variable 'c_days' [-Wmissing-variable-declarations]
+uint32_t c_days=0;
+         ^
+RTC_Config.c(7): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+uint32_t c_days=0;
+^
+RTC_Config.c(17): warning: use of logical '&&' with constant operand [-Wconstant-logical-operand]
+        while (!(RCC->BDCR && RCC_BDCR_LSERDY));
+                           ^  ~~~~~~~~~~~~~~~
+RTC_Config.c(17): note: use '&' for a bitwise operation
+        while (!(RCC->BDCR && RCC_BDCR_LSERDY));
+                           ^~
+                           &
+RTC_Config.c(17): note: remove constant to silence this warning
+        while (!(RCC->BDCR && RCC_BDCR_LSERDY));
+                          ~^~~~~~~~~~~~~~~~~~
+RTC_Config.c(22): warning: use of logical '&&' with constant operand [-Wconstant-logical-operand]
+        while(!(RTC->CRL && RTC_CRL_RSF));
+                         ^  ~~~~~~~~~~~
+RTC_Config.c(22): note: use '&' for a bitwise operation
+        while(!(RTC->CRL && RTC_CRL_RSF));
+                         ^~
+                         &
+RTC_Config.c(22): note: remove constant to silence this warning
+        while(!(RTC->CRL && RTC_CRL_RSF));
+                        ~^~~~~~~~~~~~~~
+RTC_Config.c(23): warning: use of logical '&&' with constant operand [-Wconstant-logical-operand]
+        while(!(RTC->CRL && RTC_CRL_RTOFF));
+                         ^  ~~~~~~~~~~~~~
+RTC_Config.c(23): note: use '&' for a bitwise operation
+        while(!(RTC->CRL && RTC_CRL_RTOFF));
+                         ^~
+                         &
+RTC_Config.c(23): note: remove constant to silence this warning
+        while(!(RTC->CRL && RTC_CRL_RTOFF));
+                        ~^~~~~~~~~~~~~~~~
+RTC_Config.c(34): warning: implicit conversion changes signedness: 'int' to 'uint32_t' (aka 'unsigned int') [-Wsign-conversion]
+        uint32_t counter=(counter_high<<16)+counter_low;
+                 ~~~~~~~ ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+RTC_Config.c(36): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+        uint32_t sec=c_sec-p_sec;
+                          ~^~~~~
+RTC_Config.c(43): warning: implicit conversion changes signedness: 'uint32_t' (aka 'unsigned int') to 'int' [-Wsign-conversion]
+                                p_sec=c_sec;
+                                     ~^~~~~
+RTC_Config.c(49): warning: implicit conversion changes signedness: 'uint32_t' (aka 'unsigned int') to 'int' [-Wsign-conversion]
+                                p_sec=c_sec;
+                                     ~^~~~~
+RTC_Config.c(55): warning: implicit conversion changes signedness: 'uint32_t' (aka 'unsigned int') to 'int' [-Wsign-conversion]
+                         p_sec=c_sec;
+                              ~^~~~~
+RTC_Config.c(60): warning: implicit conversion changes signedness: 'uint32_t' (aka 'unsigned int') to 'int' [-Wsign-conversion]
+                p_sec=c_sec;
+                     ~^~~~~
+RTC_Config.c(36): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
+        uint32_t sec=c_sec-p_sec;
+                 ^
+RTC_Config.c(74): warning: implicit conversion changes signedness: 'int' to 'uint32_t' (aka 'unsigned int') [-Wsign-conversion]
+        uint32_t counter=(counter_high<<16)+counter_low;
+                 ~~~~~~~ ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+RTC_Config.c(78): warning: & has lower precedence than <=; <= will be evaluated first [-Wparentheses]
+        if ( (date->month%2 & date->month<=7) || (~date->month%2 & date->month>7) & (date->month!=2) ){
+                            ^~~~~~~~~~~~~~~~
+RTC_Config.c(78): note: place parentheses around the '<=' expression to silence this warning
+        if ( (date->month%2 & date->month<=7) || (~date->month%2 & date->month>7) & (date->month!=2) ){
+                            ^
+                              (             )
+RTC_Config.c(78): note: place parentheses around the & expression to evaluate it first
+        if ( (date->month%2 & date->month<=7) || (~date->month%2 & date->month>7) & (date->month!=2) ){
+                            ^
+              (                          )
+RTC_Config.c(78): warning: & has lower precedence than >; > will be evaluated first [-Wparentheses]
+        if ( (date->month%2 & date->month<=7) || (~date->month%2 & date->month>7) & (date->month!=2) ){
+                                                                 ^~~~~~~~~~~~~~~
+RTC_Config.c(78): note: place parentheses around the '>' expression to silence this warning
+        if ( (date->month%2 & date->month<=7) || (~date->month%2 & date->month>7) & (date->month!=2) ){
+                                                                 ^
+                                                                   (            )
+RTC_Config.c(78): note: place parentheses around the & expression to evaluate it first
+        if ( (date->month%2 & date->month<=7) || (~date->month%2 & date->month>7) & (date->month!=2) ){
+                                                                 ^
+                                                  (                           )
+RTC_Config.c(76): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
+        uint32_t days=c_days-p_days;
+                 ^
+RTC_Config.c(204): warning: no newline at end of file [-Wnewline-eof]
+        
+        ^
+23 warnings generated.
+compiling RTC_Config.c...
+linking...
+Program Size: Code=3240 RO-data=252 RW-data=0 ZI-data=1648  
+".\Objects\RTC.axf" - 0 Error(s), 23 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -54,11 +172,11 @@ Package Vendor: Keil
    * Component: ARM::CMSIS:CORE:5.6.0
 
    * Component: Keil::Device:Startup:1.0.0
-      Source file:   Device/Source/ARM/startup_stm32f10x_md.s
-      Source file:   Device/Source/system_stm32f10x.c
       Include file:  RTE_Driver/Config/RTE_Device.h
       Source file:   Device/Source/ARM/STM32F1xx_OPT.s
-Build Time Elapsed:  00:00:00
+      Source file:   Device/Source/ARM/startup_stm32f10x_md.s
+      Source file:   Device/Source/system_stm32f10x.c
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>
