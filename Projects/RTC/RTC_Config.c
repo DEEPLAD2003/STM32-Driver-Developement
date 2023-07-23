@@ -59,12 +59,6 @@ void RTC_GetTime(RTC_Time *time){
 		time->seconds+=sec;
 		p_sec=c_sec;
 	}
-	
-	
-	/*
-	time->hours=ctr_val/0xE10;
-	time->minutes=(ctr_val%0xE10)/0x3C;
-	time->seconds=(ctr_val%0xE10)%0x3C;*/
 }
 
 
