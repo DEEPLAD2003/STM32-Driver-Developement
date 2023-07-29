@@ -43,13 +43,13 @@ void SPI1_Inits(void){
 
 
 int main(void){
-	char data[]="Master";
+	char data[]="Heet Depani";
 	SPI1_GPIOInits();
 	GPIO_WriteToOutputPin(GPIOA,4,RESET);
 	SPI1_Inits();
 	SPI_EN_DIS(SPI1,ENABLE);
 	GPIO_WriteToOutputPin(GPIOA,4,SET);
-	SPI_SendData(&SPI1Handle,(uint8_t*)data,strlen(data));
+	SPI_Send_Data_HD(&SPI1Handle,(uint8_t*)data,strlen(data));
 	GPIO_WriteToOutputPin(GPIOA,4,RESET);
 	SPI_EN_DIS(SPI1,DISABLE);
 	delay();

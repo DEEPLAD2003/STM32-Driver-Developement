@@ -85,24 +85,24 @@ void SPI_Init(SPI_Handle_t *pSPIHandle){
 		pSPIHandle->pSPIx->CR1|=SPI_CR1_SSM;
 		pSPIHandle->pSPIx->CR1|=SPI_CR1_SSI;
 	}
-	else if (!pSPIHandle->SPIConfig.SPI_SSM && pSPIHandle->SPIConfig.SPI_MultiMaster){
+	else if (!pSPIHandle->SPIConfig.SPI_SSM & pSPIHandle->SPIConfig.SPI_MultiMaster){
 		pSPIHandle->pSPIx->CR1&=~SPI_CR1_SSM;
 		pSPIHandle->pSPIx->CR1|=SPI_CR2_SSOE;
 	}
-	else if (!pSPIHandle->SPIConfig.SPI_SSM && !pSPIHandle->SPIConfig.SPI_MultiMaster){
+	else if (!pSPIHandle->SPIConfig.SPI_SSM & !pSPIHandle->SPIConfig.SPI_MultiMaster){
 		pSPIHandle->pSPIx->CR1&=~SPI_CR1_SSM;
 		pSPIHandle->pSPIx->CR1&=~SPI_CR2_SSOE;
 	}
 	
 	//  6. Bus Configuration (Full Duplex or Half Duplex)
-	if (pSPIHandle->SPIConfig.SPI_BusConfig==1 && pSPIHandle->SPIConfig.SPI_BusConfig==4){
+	if (pSPIHandle->SPIConfig.SPI_BusConfig==SPI_BUS_CONFIG_FD & pSPIHandle->SPIConfig.SPI_BusConfig==SPI_BUS_CONFIG_TXONLY){
 		pSPIHandle->pSPIx->CR1&=~SPI_CR1_BIDIMODE;
 		pSPIHandle->pSPIx->CR1&=~SPI_CR1_RXONLY;
 	}
-	else if(pSPIHandle->SPIConfig.SPI_BusConfig==2){
+	else if(pSPIHandle->SPIConfig.SPI_BusConfig==SPI_BUS_CONFIG_HD){
 		pSPIHandle->pSPIx->CR1|=SPI_CR1_BIDIMODE;
 	}
-	else if(pSPIHandle->SPIConfig.SPI_BusConfig==3){
+	else if(pSPIHandle->SPIConfig.SPI_BusConfig==SPI_BUS_CONFIG_RXONLY){
 		pSPIHandle->pSPIx->CR1&=~SPI_CR1_BIDIMODE;
 		pSPIHandle->pSPIx->CR1|=SPI_CR1_RXONLY;
 	}
@@ -137,12 +137,16 @@ void SPI_Dinit(SPI_TypeDef *pSPIx){
 /*
 *		Data send and Recieve (This is a Blocking Call)
 */
-void SPI_SendData(SPI_Handle_t *pspihandle,uint8_t *pTxBuffer,uint32_t Len){
-	uint16_t RxBuffer,buffer;
+void SPI_DataTransfer_FD(SPI_Handle_t *pspihandle,uint8_t *pTxBuffer,uint8_t *pRxBuffer,uint32_t Len){
+	uint16_t buffer;
 	uint16_t buffer1,buffer2;
+	
+	//  Protecting the Len variable from becoming 0xFFFFF after the last 16-bit data is sent.  
 	if(Len%2!=0 && pspihandle->SPIConfig.SPI_DFF==SPI_DFF_16BITS){
 			Len++;
 	}
+	
+	//  Load the first data bits (8 or 16) into the data register.
 	while(!(pspihandle->pSPIx->SR & (SPI_SR_TXE)));
 	if(pspihandle->pSPIx->CR1 & (SPI_CR1_DFF)){
 		buffer1=*pTxBuffer;
@@ -158,7 +162,10 @@ void SPI_SendData(SPI_Handle_t *pspihandle,uint8_t *pTxBuffer,uint32_t Len){
 		pTxBuffer++;
 		Len--;
 	}	
+	
+	
 	while(Len>0){
+		//  Loading Second Data bits (8 or 16) into the data register and continuously monitoring the RxBuffer.
 		while(!(pspihandle->pSPIx->SR & (SPI_SR_TXE)));
 		if(pspihandle->pSPIx->CR1 & SPI_CR1_DFF){
 			//16 bit DFF
@@ -171,7 +178,7 @@ void SPI_SendData(SPI_Handle_t *pspihandle,uint8_t *pTxBuffer,uint32_t Len){
 			Len-=2;
 			if (pspihandle->SPIConfig.SPI_BusConfig==SPI_BUS_CONFIG_TXONLY){
 				while(!pspihandle->pSPIx->SR>>(SPI_SR_RXNE));
-				RxBuffer=pspihandle->pSPIx->SR;
+				*pRxBuffer=pspihandle->pSPIx->SR;
 			}
 		}
 		else if(!(pspihandle->pSPIx->CR1 & SPI_CR1_DFF)){
@@ -180,19 +187,60 @@ void SPI_SendData(SPI_Handle_t *pspihandle,uint8_t *pTxBuffer,uint32_t Len){
 			Len--;
 			if (pspihandle->SPIConfig.SPI_BusConfig==SPI_BUS_CONFIG_TXONLY){
 				while(!pspihandle->pSPIx->SR>>(SPI_SR_RXNE));
-				RxBuffer=pspihandle->pSPIx->SR;
+				*pRxBuffer=pspihandle->pSPIx->SR;
 			}
 		}
+		
 		if (pspihandle->SPIConfig.SPI_BusConfig==SPI_BUS_CONFIG_TXONLY){
-				while(!pspihandle->pSPIx->SR>>(SPI_SR_RXNE));
-				RxBuffer=pspihandle->pSPIx->SR;
+				while(!pspihandle->pSPIx->SR>>(SPI_SR_RXNE)){
+					*pRxBuffer=pspihandle->pSPIx->SR;
+					pRxBuffer++;
+				}
+				
 		}
 	}
 	while(pspihandle->pSPIx->SR & SPI_SR_BSY);
 }
 
 
-void SPI_ReadData(SPI_TypeDef *pSPIx,uint8_t *pRxBuffer,uint32_t Len);
+
+
+void SPI_ReadData_HD(SPI_TypeDef *pSPIx,uint8_t *pRxBuffer,uint32_t Len);
+
+void SPI_Send_Data_HD(SPI_Handle_t *pspihandle,uint8_t* pTxBuffer,uint32_t Len){
+	if(pspihandle->SPIConfig.SPI_BusConfig){
+		uint16_t buffer;
+		uint16_t buffer1,buffer2;
+		
+		//  Protecting the Len variable from becoming 0xFFFFF after the last 16-bit data is sent.  
+		if(Len%2!=0 && pspihandle->SPIConfig.SPI_DFF==SPI_DFF_16BITS)
+				Len++;
+		
+		//  Starting the SPI Transmission by loading the Data into Data register.
+		SPI1->CR1|=SPI_CR1_BIDIOE;
+		while(Len>0){
+			while(!(pspihandle->pSPIx->SR & (SPI_SR_TXE)));
+			if(pspihandle->pSPIx->CR1 & SPI_CR1_DFF){
+				//16 bit DFF
+				buffer1=*pTxBuffer;
+				pTxBuffer++;
+				buffer2=*pTxBuffer;
+				buffer=((uint16_t)buffer1<<8)+(uint16_t)buffer2;
+				pspihandle->pSPIx->DR|=buffer;
+				pTxBuffer+=1;
+				Len-=2;
+				
+			}
+			else if(!(pspihandle->pSPIx->CR1 & SPI_CR1_DFF)){
+				pspihandle->pSPIx->DR|=*pTxBuffer;
+				pTxBuffer++;
+				Len--;
+			}
+		}
+		while(pspihandle->pSPIx->SR & SPI_SR_BSY);
+		SPI1->CR1&=~(SPI_CR1_BIDIOE);
+	}
+}
 
 /*
 *		IRQ Configuration and ISR Handling.

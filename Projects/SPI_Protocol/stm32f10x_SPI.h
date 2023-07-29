@@ -122,9 +122,9 @@ void SPI_Dinit(SPI_TypeDef *pSPIx);
 /*
 *		Data send and Recieve
 */
-void SPI_SendData(SPI_Handle_t *pspihandle,uint8_t *pTxBuffer,uint32_t Len);
-void SPI_ReadData(SPI_TypeDef *pSPIx,uint8_t *pRxBuffer,uint32_t Len);
-
+void SPI_DataTransfer_FD(SPI_Handle_t *pspihandle,uint8_t *pTxBuffer,uint8_t *pRxBuffer,uint32_t Len);
+void SPI_ReadData_HD(SPI_TypeDef *pSPIx,uint8_t *pRxBuffer,uint32_t Len);
+void SPI_Send_Data_HD(SPI_Handle_t *pspihandle,uint8_t* pTxBuffer,uint32_t Len);
 /*
 *		IRQ Configuration and ISR Handling.
 */
